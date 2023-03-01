@@ -1,0 +1,18 @@
+package com.devaseemsharma.taskyapp.di
+
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    //TODO provide retrofit builder
+
+    //TODO provide room db
+
+    //TODO shared preferences
+
+    //TODO provide repository
+}
