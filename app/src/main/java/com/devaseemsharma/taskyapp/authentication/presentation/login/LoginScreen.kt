@@ -1,8 +1,10 @@
 package com.devaseemsharma.taskyapp.authentication.presentation.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -36,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import com.devaseemsharma.taskyapp.authentication.presentation.components.HintEnabledTextField
+import com.devaseemsharma.taskyapp.authentication.presentation.components.TYFilledButton
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
 import com.devaseemsharma.taskyapp.ui.theme.Typography
 import com.devaseemsharma.taskyapp.utils.TaskyLargeTopAppBar
@@ -63,6 +67,7 @@ fun LoginScreen(
         ) {
             Spacer(modifier = Modifier.height(130.dp))
             Column(
+                verticalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
@@ -76,34 +81,62 @@ fun LoginScreen(
                     )
 
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                HintEnabledTextField(
-                    text = emailAddressState.text,
-                    hint = emailAddressState.hint,
-                    onValueChange = {
-                        viewModel.onEvent(LoginScreenEvent.EmailAddressEntered(it))
-                    },
-                    onFocusChange = {
-                        viewModel.onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
-                    },
-                    isHintVisible = emailAddressState.isHintVisible,
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyMedium,
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-                HintEnabledTextField(
-                    text = passwordState.text,
-                    hint = passwordState.hint,
-                    onValueChange = {
-                        viewModel.onEvent(LoginScreenEvent.PasswordEntered(it))
-                    },
-                    onFocusChange = {
-                        viewModel.onEvent(LoginScreenEvent.PasswordFocusChanged(it))
-                    },
-                    isHintVisible = passwordState.isHintVisible,
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyMedium,
-                )
+                Column {
+                    Spacer(modifier = Modifier.height(50.dp))
+                    HintEnabledTextField(
+                        text = emailAddressState.text,
+                        hint = emailAddressState.hint,
+                        onValueChange = {
+                            viewModel.onEvent(LoginScreenEvent.EmailAddressEntered(it))
+                        },
+                        onFocusChange = {
+                            viewModel.onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
+                        },
+                        isHintVisible = emailAddressState.isHintVisible,
+                        singleLine = true,
+                        textStyle = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    HintEnabledTextField(
+                        text = passwordState.text,
+                        hint = passwordState.hint,
+                        onValueChange = {
+                            viewModel.onEvent(LoginScreenEvent.PasswordEntered(it))
+                        },
+                        onFocusChange = {
+                            viewModel.onEvent(LoginScreenEvent.PasswordFocusChanged(it))
+                        },
+                        isHintVisible = passwordState.isHintVisible,
+                        singleLine = true,
+                        textStyle = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Spacer(modifier = Modifier.height(25.dp))
+                    TYFilledButton(
+                        buttonText = "log in", modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    ) {
+
+                    }
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    Text(text = "DON'T HAVE AN ACCOUNT?")
+
+                    TextButton(onClick = {}) {
+                        Text(text = "SIGN UP")
+                    }
+
+                }
             }
         }
 
