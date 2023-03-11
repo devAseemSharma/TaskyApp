@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _emailAddress = mutableStateOf(TextFieldState(
         hint = "Email address"

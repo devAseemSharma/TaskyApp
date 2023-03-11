@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
@@ -54,32 +56,31 @@ fun LoginScreen(
 
     val emailAddressState = viewModel.emailAddress.value
     val passwordState = viewModel.passwordText.value
-
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)) {
+        Spacer(modifier = Modifier.height(47.dp))
         TaskyLargeTopAppBar(
             "Welcome Back!",
             modifier = Modifier
-                .height(160.dp)
-                .align(alignment = Alignment.TopCenter)
+                .height(121.dp)
         )
-        Column(
-            modifier = Modifier.align(alignment = Alignment.TopCenter)
-        ) {
-            Spacer(modifier = Modifier.height(130.dp))
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(
-                            topStart = 30.dp,
-                            topEnd = 30.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
-                        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(
+                        topStart = 30.dp,
+                        topEnd = 30.dp,
+                        bottomEnd = 0.dp,
+                        bottomStart = 0.dp
                     )
-
+                )
+        ) {
+            Column(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopCenter)
             ) {
                 Column {
                     Spacer(modifier = Modifier.height(50.dp))
@@ -122,24 +123,23 @@ fun LoginScreen(
                     }
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .fillMaxWidth()
-                ) {
+            }
+            Row(verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(20.dp)
+                    .fillMaxWidth()
+            ) {
 
-                    Text(text = "DON'T HAVE AN ACCOUNT?")
+                Text(text = "DON'T HAVE AN ACCOUNT?")
 
-                    TextButton(onClick = {}) {
-                        Text(text = "SIGN UP")
-                    }
-
+                TextButton(onClick = {}) {
+                    Text(text = "SIGN UP")
                 }
+
             }
         }
-
     }
 }
 
@@ -147,7 +147,7 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPreview() {
     TaskyAppTheme {
-        val loginViewModel = LoginViewModel(SavedStateHandle())
+        val loginViewModel = LoginViewModel()
         LoginScreen(viewModel = loginViewModel)
     }
 }

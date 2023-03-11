@@ -53,7 +53,6 @@ fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = NavRoute.Login.path,
-        modifier = Modifier.padding(16.dp)
     ) {
         composable(route = NavRoute.Login.path) {
             //call LoginScreen composable function here
