@@ -26,9 +26,15 @@ class LoginViewModel @Inject constructor(
     fun onEvent(event: LoginScreenEvent){
         when(event){
             is LoginScreenEvent.EmailAddressEntered -> {
+                if(event.txtEmail.isEmpty()){
+                    _emailAddress.value = emailAddress.value.copy(
+                        isHintVisible = true
+                    )
+                }
                 _emailAddress.value = emailAddress.value.copy(
                     text = event.txtEmail
                 )
+
             }
 
             is LoginScreenEvent.EmailAddressFocusChanged -> {
@@ -39,6 +45,11 @@ class LoginViewModel @Inject constructor(
             }
 
             is LoginScreenEvent.PasswordEntered -> {
+                if(event.passwordText.isEmpty()){
+                    _passwordText.value = passwordText.value.copy(
+                        isHintVisible = true
+                    )
+                }
                 _passwordText.value = passwordText.value.copy(
                     text = event.passwordText
                 )

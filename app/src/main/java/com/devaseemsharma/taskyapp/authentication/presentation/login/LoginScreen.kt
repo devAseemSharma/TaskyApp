@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
+import com.devaseemsharma.taskyapp.authentication.presentation.components.HintEnabledPasswordTextField
 import com.devaseemsharma.taskyapp.authentication.presentation.components.HintEnabledTextField
 import com.devaseemsharma.taskyapp.authentication.presentation.components.TYFilledButton
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
@@ -99,7 +100,7 @@ fun LoginScreen(
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                     Spacer(modifier = Modifier.height(15.dp))
-                    HintEnabledTextField(
+                    HintEnabledPasswordTextField(
                         text = passwordState.text,
                         hint = passwordState.hint,
                         onValueChange = {
