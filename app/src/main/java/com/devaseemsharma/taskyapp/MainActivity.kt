@@ -11,17 +11,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.devaseemsharma.taskyapp.authentication.presentation.login.LoginScreen
+import com.devaseemsharma.taskyapp.authentication.presentation.login.LoginViewModel
 import com.devaseemsharma.taskyapp.authentication.presentation.register.RegisterScreen
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
 import com.devaseemsharma.taskyapp.utils.NavRoute
@@ -56,12 +60,15 @@ fun NavGraph(navController: NavHostController) {
         modifier = Modifier.padding(16.dp)
     ) {
         composable(route = NavRoute.Login.path) {
-            //call LoginScreen composable function here
-            LoginScreen()
+            val viewModel: LoginViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+            LoginScreen(state = state){
+                viewModel::onEvent
+            }
         }
 
         composable(route = NavRoute.Register.path) {
-            //call Register composable function here
+
             RegisterScreen()
         }
 

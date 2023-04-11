@@ -10,13 +10,12 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.devaseemsharma.taskyapp.authentication.presentation.TextFieldState
 
 @Composable
 fun HintEnabledTextField(
-    text: String,
-    hint: String,
+    textState: TextFieldState,
     modifier: Modifier = Modifier,
-    isHintVisible: Boolean = true,
     onValueChange: (String) -> Unit,
     textStyle: TextStyle = TextStyle(),
     singleLine: Boolean = false,
@@ -26,7 +25,7 @@ fun HintEnabledTextField(
         modifier = modifier
     ) {
         BasicTextField(
-            value = text,
+            value = textState.text,
             onValueChange = onValueChange,
             singleLine = singleLine,
             textStyle = textStyle,
@@ -36,8 +35,8 @@ fun HintEnabledTextField(
                     onFocusChange(it)
                 }
         )
-        if(isHintVisible) {
-            Text(text = hint, style = textStyle, color = Color.DarkGray)
+        if (textState.isHintVisible) {
+            Text(text = textState.hint, style = textStyle, color = Color.DarkGray)
         }
     }
 }

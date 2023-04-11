@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
+import com.devaseemsharma.taskyapp.authentication.presentation.TextFieldState
 import com.devaseemsharma.taskyapp.authentication.presentation.components.HintEnabledTextField
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
 import com.devaseemsharma.taskyapp.ui.theme.Typography
@@ -45,11 +46,12 @@ import kotlin.math.log
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+     state: LoginState,
+     onEvent: (LoginScreenEvent) -> Unit
 ) {
 
-    val emailAddressState = viewModel.emailAddress.value
-    val passwordState = viewModel.passwordText.value
+    val emailAddressState = state.emailAddress
+    val passwordState = state.passwordText
 
     Box(modifier = Modifier.fillMaxSize()) {
         TaskyLargeTopAppBar(
@@ -78,29 +80,34 @@ fun LoginScreen(
             ) {
                 Spacer(modifier = Modifier.height(40.dp))
                 HintEnabledTextField(
-                    text = emailAddressState.text,
-                    hint = emailAddressState.hint,
+                    textState = TextFieldState(
+                        emailAddressState.text,
+                        emailAddressState.hint,
+                        emailAddressState.isHintVisible
+                    ),
                     onValueChange = {
-                        viewModel.onEvent(LoginScreenEvent.EmailAddressEntered(it))
+                        onEvent(LoginScreenEvent.EmailAddressEntered(it))
                     },
                     onFocusChange = {
-                        viewModel.onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
+                        onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
                     },
-                    isHintVisible = emailAddressState.isHintVisible,
+
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(40.dp))
                 HintEnabledTextField(
-                    text = passwordState.text,
-                    hint = passwordState.hint,
+                    textState = TextFieldState(
+                        passwordState.text,
+                        passwordState.hint,
+                        passwordState.isHintVisible
+                    ),
                     onValueChange = {
-                        viewModel.onEvent(LoginScreenEvent.PasswordEntered(it))
+                        onEvent(LoginScreenEvent.PasswordEntered(it))
                     },
                     onFocusChange = {
-                        viewModel.onEvent(LoginScreenEvent.PasswordFocusChanged(it))
+                        onEvent(LoginScreenEvent.PasswordFocusChanged(it))
                     },
-                    isHintVisible = passwordState.isHintVisible,
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodyMedium,
                 )
@@ -114,7 +121,7 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPreview() {
     TaskyAppTheme {
-        val loginViewModel = LoginViewModel(SavedStateHandle())
-        LoginScreen(viewModel = loginViewModel)
+        val state = LoginState()
+        LoginScreen(state){}
     }
 }

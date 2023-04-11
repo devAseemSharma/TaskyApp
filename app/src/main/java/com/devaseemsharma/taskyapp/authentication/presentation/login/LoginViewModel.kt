@@ -6,50 +6,69 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.devaseemsharma.taskyapp.authentication.presentation.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import org.w3c.dom.Text
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _emailAddress = mutableStateOf(TextFieldState(
-        hint = "Email address"
-    ))
-    val emailAddress: State<TextFieldState> = _emailAddress
-
-    private val _passwordText = mutableStateOf(TextFieldState(
-        hint = "Password"
-    ))
-    val passwordText: State<TextFieldState> = _passwordText
+    var state = MutableStateFlow(LoginState())
+        private set
 
 
-    fun onEvent(event: LoginScreenEvent){
-        when(event){
+    fun onEvent(event: LoginScreenEvent) {
+        when (event) {
             is LoginScreenEvent.EmailAddressEntered -> {
-                _emailAddress.value = emailAddress.value.copy(
-                    text = event.txtEmail
-                )
+                state.update {
+                    it.copy(
+                        emailAddress = TextFieldState(
+                            text = event.txtEmail,
+                            isHintVisible = it.emailAddress.isHintVisible,
+                            hint = it.emailAddress.hint
+                        )
+                    )
+                }
             }
 
             is LoginScreenEvent.EmailAddressFocusChanged -> {
-                _emailAddress.value = emailAddress.value.copy(
-                    isHintVisible = !event.focusState.isFocused
-                            && emailAddress.value.text.isBlank()
-                )
+                state.update {
+                    it.copy(
+                        emailAddress = TextFieldState(
+                            text = it.emailAddress.text,
+                            isHintVisible =  !event.focusState.isFocused
+                                    && it.emailAddress.text.isBlank(),
+                            hint = it.emailAddress.hint
+                        )
+                    )
+                }
             }
 
             is LoginScreenEvent.PasswordEntered -> {
-                _passwordText.value = passwordText.value.copy(
-                    text = event.passwordText
-                )
+                state.update {
+                    it.copy(
+                        passwordText = TextFieldState(
+                            text = event.passwordText,
+                            isHintVisible = it.passwordText.isHintVisible,
+                            hint = it.passwordText.hint
+                        )
+                    )
+                }
             }
 
             is LoginScreenEvent.PasswordFocusChanged -> {
-                _passwordText.value = passwordText.value.copy(
-                    isHintVisible = !event.focusState.isFocused
-                            && passwordText.value.text.isBlank()
-                )
+                state.update {
+                    it.copy(
+                        emailAddress = TextFieldState(
+                            text = it.passwordText.text,
+                            isHintVisible = !event.focusState.isFocused
+                                    && it.passwordText.text.isBlank(),
+                            hint = it.emailAddress.hint
+                        )
+                    )
+                }
             }
 
             is LoginScreenEvent.LoginUser -> {
@@ -64,3 +83,9 @@ class LoginViewModel @Inject constructor(
 
 
 }
+
+data class LoginState(
+    var emailAddress: TextFieldState = TextFieldState(hint = "Email address"),
+    var passwordText: TextFieldState = TextFieldState(hint = "Password"),
+    var isLoading: Boolean = false
+)
