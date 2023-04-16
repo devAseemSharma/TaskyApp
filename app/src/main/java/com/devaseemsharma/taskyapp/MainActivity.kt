@@ -58,13 +58,12 @@ fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = NavRoute.Login.path,
-        modifier = Modifier.padding(16.dp)
     ) {
         composable(route = NavRoute.Login.path) {
             val viewModel: LoginViewModel = viewModel()
             val state by viewModel.state.collectAsState()
             LoginScreen(state = state){
-                viewModel::onEvent
+                viewModel.onEvent(it)
             }
         }
 

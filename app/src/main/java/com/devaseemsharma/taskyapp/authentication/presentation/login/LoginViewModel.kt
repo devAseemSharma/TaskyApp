@@ -26,7 +26,6 @@ class LoginViewModel @Inject constructor(
                     it.copy(
                         emailAddress = TextFieldState(
                             text = event.txtEmail,
-                            isHintVisible = it.emailAddress.isHintVisible,
                             hint = it.emailAddress.hint
                         )
                     )
@@ -38,8 +37,6 @@ class LoginViewModel @Inject constructor(
                     it.copy(
                         emailAddress = TextFieldState(
                             text = it.emailAddress.text,
-                            isHintVisible =  !event.focusState.isFocused
-                                    && it.emailAddress.text.isBlank(),
                             hint = it.emailAddress.hint
                         )
                     )
@@ -51,7 +48,6 @@ class LoginViewModel @Inject constructor(
                     it.copy(
                         passwordText = TextFieldState(
                             text = event.passwordText,
-                            isHintVisible = it.passwordText.isHintVisible,
                             hint = it.passwordText.hint
                         )
                     )
@@ -61,11 +57,9 @@ class LoginViewModel @Inject constructor(
             is LoginScreenEvent.PasswordFocusChanged -> {
                 state.update {
                     it.copy(
-                        emailAddress = TextFieldState(
+                        passwordText = TextFieldState(
                             text = it.passwordText.text,
-                            isHintVisible = !event.focusState.isFocused
-                                    && it.passwordText.text.isBlank(),
-                            hint = it.emailAddress.hint
+                            hint = it.passwordText.hint
                         )
                     )
                 }

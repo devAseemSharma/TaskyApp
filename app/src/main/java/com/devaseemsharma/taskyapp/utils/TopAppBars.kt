@@ -20,8 +20,7 @@ fun TaskyLargeTopAppBar(title: String, modifier: Modifier) {
             Text(
                 title,
                 color = Color.White,
-                style = Typography.titleLarge,
-                modifier = Modifier.padding(all = 54.dp)
+                style = Typography.titleLarge
             )
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(

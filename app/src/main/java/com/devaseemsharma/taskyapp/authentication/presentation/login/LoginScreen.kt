@@ -1,120 +1,117 @@
 package com.devaseemsharma.taskyapp.authentication.presentation.login
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.SavedStateHandle
+import com.devaseemsharma.taskyapp.R
 import com.devaseemsharma.taskyapp.authentication.presentation.TextFieldState
-import com.devaseemsharma.taskyapp.authentication.presentation.components.HintEnabledTextField
+import com.devaseemsharma.taskyapp.ui.composables.HintEnabledOutlinedTextField
+import com.devaseemsharma.taskyapp.ui.composables.TaskyContent
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
 import com.devaseemsharma.taskyapp.ui.theme.Typography
-import com.devaseemsharma.taskyapp.utils.TaskyLargeTopAppBar
-import kotlin.math.log
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-     state: LoginState,
-     onEvent: (LoginScreenEvent) -> Unit
+    state: LoginState,
+    onEvent: (LoginScreenEvent) -> Unit
 ) {
-
     val emailAddressState = state.emailAddress
     val passwordState = state.passwordText
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        TaskyLargeTopAppBar(
-            "Welcome Back!",
-            modifier = Modifier
-                .height(160.dp)
-                .align(alignment = Alignment.TopCenter)
-        )
-        Column(
-            modifier = Modifier.align(alignment = Alignment.TopCenter)
-        ) {
-            Spacer(modifier = Modifier.height(130.dp))
+    Scaffold(
+        content = { contentPadding ->
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(
-                            topStart = 30.dp,
-                            topEnd = 30.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
-                        )
-                    )
-
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                HintEnabledTextField(
-                    textState = TextFieldState(
-                        emailAddressState.text,
-                        emailAddressState.hint,
-                        emailAddressState.isHintVisible
-                    ),
-                    onValueChange = {
-                        onEvent(LoginScreenEvent.EmailAddressEntered(it))
-                    },
-                    onFocusChange = {
-                        onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
-                    },
 
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyMedium,
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-                HintEnabledTextField(
-                    textState = TextFieldState(
-                        passwordState.text,
-                        passwordState.hint,
-                        passwordState.isHintVisible
-                    ),
-                    onValueChange = {
-                        onEvent(LoginScreenEvent.PasswordEntered(it))
-                    },
-                    onFocusChange = {
-                        onEvent(LoginScreenEvent.PasswordFocusChanged(it))
-                    },
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.bodyMedium,
-                )
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black)
+                        .padding(40.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.welcome_back),
+                        color = Color.White,
+                        style = Typography.titleLarge
+                    )
+                }
+
+
+
+                TaskyContent(modifier = Modifier.background(Color.Black)) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(contentPadding)
+                            .background(
+                                color = Color.White,
+                            )
+                    ) {
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(all = 16.dp)
+
+                        ) {
+                            Spacer(modifier = Modifier.height(20.dp))
+                            HintEnabledOutlinedTextField(
+                                textColor = Color.Black,
+                                textState = TextFieldState(
+                                    emailAddressState.text,
+                                    emailAddressState.hint
+                                ),
+                                onValueChange = {
+                                    onEvent(LoginScreenEvent.EmailAddressEntered(it))
+                                },
+                                onFocusChange = {
+                                    onEvent(LoginScreenEvent.EmailAddressFocusChanged(it))
+                                },
+
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.bodyMedium,
+                            )
+                            Spacer(modifier = Modifier.height(40.dp))
+                            HintEnabledOutlinedTextField(
+                                textColor = Color.Black,
+                                textState = TextFieldState(
+                                    passwordState.text,
+                                    passwordState.hint),
+                                onValueChange = {
+                                    onEvent(LoginScreenEvent.PasswordEntered(it))
+                                },
+                                onFocusChange = {
+                                    onEvent(LoginScreenEvent.PasswordFocusChanged(it))
+                                },
+                                singleLine = true,
+                                textStyle = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+                }
             }
         }
-
-    }
+    )
 }
 
 @Preview(showBackground = true)
@@ -122,6 +119,6 @@ fun LoginScreen(
 fun LoginScreenPreview() {
     TaskyAppTheme {
         val state = LoginState()
-        LoginScreen(state){}
+        LoginScreen(state) {}
     }
 }
