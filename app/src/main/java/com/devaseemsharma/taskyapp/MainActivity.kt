@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,7 +61,7 @@ fun NavGraph(navController: NavHostController) {
         modifier = Modifier.padding(16.dp)
     ) {
         composable(route = NavRoute.Login.path) {
-            val viewModel: LoginViewModel = hiltViewModel()
+            val viewModel: LoginViewModel = viewModel()
             val state by viewModel.state.collectAsState()
             LoginScreen(state = state){
                 viewModel::onEvent
