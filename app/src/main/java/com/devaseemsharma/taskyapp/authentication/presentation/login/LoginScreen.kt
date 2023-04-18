@@ -24,6 +24,7 @@ import com.devaseemsharma.taskyapp.R
 import com.devaseemsharma.taskyapp.authentication.presentation.TextFieldState
 import com.devaseemsharma.taskyapp.ui.composables.HintEnabledOutlinedTextField
 import com.devaseemsharma.taskyapp.ui.composables.TaskyContent
+import com.devaseemsharma.taskyapp.ui.composables.TaskyRoundedSolidButton
 import com.devaseemsharma.taskyapp.ui.theme.TaskyAppTheme
 import com.devaseemsharma.taskyapp.ui.theme.Typography
 
@@ -96,7 +97,8 @@ fun LoginScreen(
                                 textColor = Color.Black,
                                 textState = TextFieldState(
                                     passwordState.text,
-                                    passwordState.hint),
+                                    passwordState.hint
+                                ),
                                 onValueChange = {
                                     onEvent(LoginScreenEvent.PasswordEntered(it))
                                 },
@@ -105,6 +107,16 @@ fun LoginScreen(
                                 },
                                 singleLine = true,
                                 textStyle = MaterialTheme.typography.bodyMedium,
+                            )
+                            Spacer(modifier = Modifier.height(40.dp))
+                            TaskyRoundedSolidButton(
+                                buttonText = "LOG IN",
+                                textColor = Color.White,
+                                bgColor = Color.Black,
+                                isEnabled = true,
+                                onButtonClick = {
+
+                                }
                             )
                         }
                     }
